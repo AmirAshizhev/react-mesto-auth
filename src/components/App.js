@@ -11,6 +11,7 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import { Route, Routes } from 'react-router-dom';
 import Login from "./Login";
+import Register from "./Register";
 
 function App() {
 
@@ -113,7 +114,7 @@ function App() {
               onCardDelete={handleCardDelete}
               />}
             />
-            <Route path="/sign-up" element={'102'}/>
+            <Route path="/sign-up" element={<Register/>}/>
             <Route path="/sign-in" element={<Login/>}/>
           </Routes>
 

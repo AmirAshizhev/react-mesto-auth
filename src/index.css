@@ -52,4 +52,6 @@
 @import url(./blocks/login/__fieldset/login__fieldset.css);
 @import url(./blocks/login/__input/login__input.css);
 @import url(./blocks/login/__button/login__button.css);
+@import url(./blocks/login/__text/login__text.css);
+@import url(./blocks/login/__link/login__link.css);
 

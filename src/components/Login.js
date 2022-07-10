@@ -2,7 +2,7 @@ const Login = () => {
 
   return (
     <form className="login">
-      <h2 className="login__title">ВХОД</h2>
+      <h2 className="login__title">Вход</h2>
       <fieldset className="login__fieldset">
         <label className="popup__field">
           <input 
