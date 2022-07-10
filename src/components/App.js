@@ -9,6 +9,8 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import { Route, Routes } from 'react-router-dom';
+import Login from "./Login";
 
 function App() {
 
@@ -99,7 +101,23 @@ function App() {
         <CurrentUserContext.Provider value={curretUser}>
           <Header/>
 
-          <Main 
+          <Routes>
+            <Route path="/" element={
+              <Main 
+              onEditProfile = {handleEditProfileClick}
+              onEditAvatar = {handleEditAvatarClick}
+              onAddPlace = {handleAddPlaceClick}
+              cards={cards}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              />}
+            />
+            <Route path="/sign-up" element={'102'}/>
+            <Route path="/sign-in" element={<Login/>}/>
+          </Routes>
+
+          {/* <Main 
             onEditProfile = {handleEditProfileClick}
             onEditAvatar = {handleEditAvatarClick}
             onAddPlace = {handleAddPlaceClick}
@@ -107,7 +125,7 @@ function App() {
             onCardClick={handleCardClick}
             onCardLike={handleCardLike}
             onCardDelete={handleCardDelete}
-          />
+          /> */}
 
           <Footer/>
 
