@@ -13,6 +13,7 @@ import { Route, Routes } from 'react-router-dom';
 import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
+import { Navigate } from "react-router-dom";
 
 function App() {
 
@@ -121,17 +122,9 @@ function App() {
             />
             <Route path="/sign-up" element={<Register/>}/>
             <Route path="/sign-in" element={<Login/>}/>
+            <Route path="*" element={
+              loggedIn ? <Navigate to="/"/> : <Navigate to="/sign-in"/>}/>
           </Routes>
-
-          {/* <Main 
-            onEditProfile = {handleEditProfileClick}
-            onEditAvatar = {handleEditAvatarClick}
-            onAddPlace = {handleAddPlaceClick}
-            cards={cards}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-          /> */}
 
           <Footer/>
 
