@@ -12,6 +12,7 @@ import AddPlacePopup from "./AddPlacePopup";
 import { Route, Routes } from 'react-router-dom';
 import Login from "./Login";
 import Register from "./Register";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
 
@@ -23,6 +24,8 @@ function App() {
   const [cards, setCards] = useState([])
   const [selectedCard, setSelectedCard] = useState(null)
   const [curretUser, setCurrentUser] = useState({})
+
+  const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
     Promise.all([api.getUserInformation(), api.getInitialCards()])
@@ -104,15 +107,17 @@ function App() {
 
           <Routes>
             <Route path="/" element={
-              <Main 
-              onEditProfile = {handleEditProfileClick}
-              onEditAvatar = {handleEditAvatarClick}
-              onAddPlace = {handleAddPlaceClick}
-              cards={cards}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-              />}
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Main 
+                  onEditProfile = {handleEditProfileClick}
+                  onEditAvatar = {handleEditAvatarClick}
+                  onAddPlace = {handleAddPlaceClick}
+                  cards={cards}
+                  onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+                />
+              </ProtectedRoute>}
             />
             <Route path="/sign-up" element={<Register/>}/>
             <Route path="/sign-in" element={<Login/>}/>

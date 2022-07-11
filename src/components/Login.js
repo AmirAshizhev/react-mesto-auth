@@ -18,7 +18,7 @@ const Login = () => {
         <label className="popup__field">
           <input 
             id="" 
-            type="text"  
+            type="password"  
             name="password" 
             placeholder="Пароль" 
             className="login__input" 

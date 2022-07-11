@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Register = () => {
   return (
     <form className="login">
@@ -17,7 +19,7 @@ const Register = () => {
       <label className="popup__field">
         <input 
           id="" 
-          type="text"  
+          type="password"  
           name="password" 
           placeholder="Пароль" 
           className="login__input" 
@@ -27,7 +29,7 @@ const Register = () => {
       </label>
     </fieldset>
     <button className="login__button" type="submit" aria-label="Войти">Войти</button>
-    <p className="login__text">Уже зарегестрированы? <a className="login__link" href="#" target="_self">Войти</a></p>
+    <p className="login__text">Уже зарегестрированы? <Link className="login__link" to="/sign-in" target="_self">Войти</Link></p>
   </form>
   )
 }
