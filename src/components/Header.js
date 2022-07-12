@@ -1,14 +1,14 @@
 import { Routes, Route } from "react-router-dom"
 import { Link } from "react-router-dom"
 
-const Header = () => {
+const Header = ({userEmail}) => {
   return (
     <header className="header">
       <a href="#" target="_blank" className="header__logo"></a>
       <Routes>
         <Route path="/" element={
           <div className="header__box">
-            <p className="header__email">email</p>
+            <p className="header__email">{userEmail}</p>
             <Link className="header__link header__link_exit" to="/sign-in">
               Выйти
             </Link>

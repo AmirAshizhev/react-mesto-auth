@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-const Register = () => {
+const Register = ({handleRegister}) => {
 
   const [data, setData] = useState({
     email: '',
@@ -18,7 +18,7 @@ const Register = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log (data)
+    handleRegister(data)
   }
 
   return (
@@ -48,7 +48,7 @@ const Register = () => {
         <span className="popup__item-error edit-button-description-error"> </span>
       </label>
     </fieldset>
-    <button className="login__button" type="submit" aria-label="Войти">Войти</button>
+    <button className="login__button" type="submit" aria-label="Войти">Зарегестрироваться</button>
     <p className="login__text">Уже зарегестрированы? <Link className="login__link" to="/sign-in" target="_self">Войти</Link></p>
   </form>
   )

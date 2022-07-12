@@ -9,13 +9,16 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
-import { Navigate } from "react-router-dom";
+import { register, authorize } from "../utils/authApi";
+import { useNavigate } from "react-router-dom";
 
 function App() {
+
+  const navigate = useNavigate();
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false) 
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
@@ -27,6 +30,7 @@ function App() {
   const [curretUser, setCurrentUser] = useState({})
 
   const [loggedIn, setLoggedIn] = useState(false)
+  const [userData, setUserData] = useState({email: ''})
 
   useEffect(() => {
     Promise.all([api.getUserInformation(), api.getInitialCards()])
@@ -100,11 +104,42 @@ function App() {
     closeAllPopups();
   }
 
+  function handleRegister({email, password}) {
+    register(email, password)
+    .then((data) => {
+      console.log(data)
+      setUserData({email: data.email})
+      navigate("sign-in")
+    })
+    .catch(err => console.log(err))
+  }
+
+  function handleLogin({email, password}){
+    // setLoggedIn(true)
+    authorize(email, password)
+    .then((data) => {
+      console.log(data)
+      if (data.token){
+        localStorage.setItem('token', data.token);
+        // console.log(data.token)
+        // return data.token;
+        setLoggedIn(true)
+        setUserData({email: email})
+        navigate("/")
+      }
+    })
+     .catch(err => console.log(err))
+  }
+
+  function tokenCheck(){
+
+  }
+
   return (
     <div className="page">
       <div>
         <CurrentUserContext.Provider value={curretUser}>
-          <Header/>
+          <Header userEmail={userData.email}/>
 
           <Routes>
             <Route path="/" element={
@@ -120,8 +155,8 @@ function App() {
                 />
               </ProtectedRoute>}
             />
-            <Route path="/sign-up" element={<Register/>}/>
-            <Route path="/sign-in" element={<Login/>}/>
+            <Route path="/sign-up" element={<Register handleRegister={handleRegister}/>}/>
+            <Route path="/sign-in" element={<Login handleLogin={handleLogin} tokenCheck={tokenCheck}/>}/>
             <Route path="*" element={
               loggedIn ? <Navigate to="/"/> : <Navigate to="/sign-in"/>}/>
           </Routes>
