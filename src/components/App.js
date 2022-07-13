@@ -15,6 +15,7 @@ import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
 import { register, authorize, getContent } from "../utils/authApi";
 import { useNavigate } from "react-router-dom";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
 
@@ -24,6 +25,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false)
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false)
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false)
 
   const [cards, setCards] = useState([])
   const [selectedCard, setSelectedCard] = useState(null)
@@ -84,7 +87,7 @@ function App() {
     setIsEditAvatarPopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsImagePopupOpen(false)
-  
+    setIsInfoTooltipOpen(false)
   }
 
   function handleUpdateUser (data) {
@@ -111,22 +114,25 @@ function App() {
   function handleRegister({email, password}) {
     register(email, password)
     .then((data) => {
-      console.log(data)
+      // console.log(data)
+      setIsRegisterSuccess(true);
+      setIsInfoTooltipOpen(true);
       setUserData({email: data.email})
       navigate("/sign-in")
     })
-    .catch(err => console.log(err))
+    .catch((err) => {
+      setIsRegisterSuccess(false);
+      setIsInfoTooltipOpen(true);
+      console.log(err)
+    })
   }
 
   function handleLogin({email, password}){
-    // setLoggedIn(true)
     authorize(email, password)
     .then((data) => {
       console.log(data)
       if (data.token){
         localStorage.setItem('token', data.token);
-        // console.log(data.token)
-        // return data.token;
         setLoggedIn(true)
         setUserData({email: email})
         navigate("/")
@@ -214,6 +220,13 @@ function App() {
             card = {selectedCard}
             isOpen = {isImagePopupOpen}
             onClose = {closeAllPopups}
+          />
+
+          <InfoTooltip
+            isOpen = {isInfoTooltipOpen}
+            onClose = {closeAllPopups}
+            isRegisterSuccess = {isRegisterSuccess}
+
           />
         </CurrentUserContext.Provider>
       </div>
