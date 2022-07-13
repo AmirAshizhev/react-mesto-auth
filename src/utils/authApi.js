@@ -27,10 +27,7 @@ export const getContent = (token) => {
     headers: {
       "Content-Type": "application/json",
       "Authorization" : `Bearer ${token}`
-    } ,
-    body: {
-      "password": "somepassword",
-      "email": "email@yandex.ru"
-    }
+    } 
  })
+ .then((response => response.json()))
 }

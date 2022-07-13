@@ -13,7 +13,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
-import { register, authorize } from "../utils/authApi";
+import { register, authorize, getContent } from "../utils/authApi";
 import { useNavigate } from "react-router-dom";
 
 function App() {
@@ -41,6 +41,10 @@ function App() {
       .catch(err => {
         console.log(err);
       });
+  },[])
+
+  useEffect(()=>{
+    tokenCheck();
   },[])
 
   function handleCardClick(card) {
@@ -109,7 +113,7 @@ function App() {
     .then((data) => {
       console.log(data)
       setUserData({email: data.email})
-      navigate("sign-in")
+      navigate("/sign-in")
     })
     .catch(err => console.log(err))
   }
@@ -132,14 +136,32 @@ function App() {
   }
 
   function tokenCheck(){
+    let token = localStorage.getItem('token');
+    if (token){
+      getContent(token)
+      .then((res) => {
+        if(res.data.email){
+          setLoggedIn(true)
+          setUserData({email: res.data.email})
+          navigate("/")
+        }
+      })
+    }
+  }
 
+  function handleLogout() {
+    localStorage.removeItem('token');
+    setUserData({
+      email: ''
+    })
+    setLoggedIn(false)
   }
 
   return (
     <div className="page">
       <div>
         <CurrentUserContext.Provider value={curretUser}>
-          <Header userEmail={userData.email}/>
+          <Header userEmail={userData.email} handleLogout={handleLogout}/>
 
           <Routes>
             <Route path="/" element={

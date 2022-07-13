@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import { Link } from "react-router-dom"
 
-const Header = ({userEmail}) => {
+const Header = ({userEmail, handleLogout}) => {
   return (
     <header className="header">
       <a href="#" target="_blank" className="header__logo"></a>
@@ -9,7 +9,7 @@ const Header = ({userEmail}) => {
         <Route path="/" element={
           <div className="header__box">
             <p className="header__email">{userEmail}</p>
-            <Link className="header__link header__link_exit" to="/sign-in">
+            <Link className="header__link header__link_exit" to="/sign-in" onClick={handleLogout}>
               Выйти
             </Link>
           </div>
