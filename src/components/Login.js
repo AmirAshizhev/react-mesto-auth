@@ -33,6 +33,7 @@ const Login = ({handleLogin}) => {
             className="login__input" 
             required 
             onChange={handleChange}
+            value = {data.email}
           />
           <span className="popup__item-error edit-button-name-error"></span>
         </label>
@@ -44,6 +45,7 @@ const Login = ({handleLogin}) => {
             className="login__input" 
             required 
             onChange={handleChange}
+            value = {data.password}
           />
           <span className="popup__item-error edit-button-description-error"> </span>
         </label>

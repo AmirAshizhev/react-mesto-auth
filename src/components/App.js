@@ -50,6 +50,23 @@ function App() {
     tokenCheck();
   },[])
 
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || isImagePopupOpen || isInfoTooltipOpen
+
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if(evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if(isOpen) {
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen]) 
+
+
   function handleCardClick(card) {
     setIsImagePopupOpen(true)
     setSelectedCard(card)
@@ -59,7 +76,7 @@ function App() {
     const isLiked = card.likes.some(i => i._id === curretUser._id);
     
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
     })
     .catch(res => console.log(res));
   }
@@ -92,23 +109,32 @@ function App() {
 
   function handleUpdateUser (data) {
     api.setUserInformation(data)
-    .then((res) => setCurrentUser(res))
+    .then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    })
     .catch(res => console.log(res));
-    closeAllPopups();
+    
   }
 
   function handleUpdateAvatar (data) {
     api.setUserAvatar(data)
-    .then((res) => setCurrentUser(res))
+    .then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    })
     .catch(res => console.log(res));
-    closeAllPopups();
+    
   }
 
   function handleAddPlaceSubmit (data) {
     api.getNewCard(data)
-    .then((newCard) => setCards([newCard, ...cards]))
+    .then((newCard) => {
+      setCards([newCard, ...cards]);
+      closeAllPopups();
+    })
     .catch(res => console.log(res));
-    closeAllPopups();
+    
   }
 
   function handleRegister({email, password}) {
@@ -130,7 +156,7 @@ function App() {
   function handleLogin({email, password}){
     authorize(email, password)
     .then((data) => {
-      console.log(data)
+      // console.log(data)
       if (data.token){
         localStorage.setItem('token', data.token);
         setLoggedIn(true)
@@ -138,7 +164,7 @@ function App() {
         navigate("/")
       }
     })
-     .catch(err => console.log(err))
+    .catch(err => console.log(err))
   }
 
   function tokenCheck(){
@@ -152,6 +178,7 @@ function App() {
           navigate("/")
         }
       })
+      .catch(err => console.log(err))
     }
   }
 

@@ -20,7 +20,7 @@ const EditProfilePopup = ({onUpdateUser, isOpen, onClose}) => {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]); 
+  }, [currentUser, isOpen]); 
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -43,7 +43,7 @@ const EditProfilePopup = ({onUpdateUser, isOpen, onClose}) => {
         <label className="popup__field">
           <input 
             id="edit-button-name" 
-            value={name} 
+            value={name || ""} 
             onChange={handleNameChange} 
             type="text"  
             name="name" 
@@ -58,7 +58,7 @@ const EditProfilePopup = ({onUpdateUser, isOpen, onClose}) => {
         <label className="popup__field">
           <input 
             id="edit-button-description" 
-            value={description} 
+            value={description || ""} 
             onChange={handleDescriptionChange} 
             type="text"  
             name="about" 
