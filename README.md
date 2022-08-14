@@ -9,7 +9,7 @@
 
 ### О проекте
 Учебный проект в рамках курса [Яндекс.Практикума](https://practicum.yandex.ru/web/) Веб-разработчик.
-Он представляет собой логическое продолжение работы над [mesto](https://github.com/AmirAshizhev/mesto) и над [mesto-react](https://amirashizhev.github.io/mesto-react/)
+Он представляет собой логическое продолжение работы над [mesto](https://github.com/AmirAshizhev/mesto) и над [mesto-react](https://amirashizhev.github.io/mesto-react/).
 Добавлена возможность регистрации пользователя, а также входа в систему зарегестрированному пользователю. 
 Используемые технологии: React.js, JavaScript, HTML5, CSS3
 
