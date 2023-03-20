@@ -1,23 +1,9 @@
-// import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useValidation } from '../hooks/useValidation';
 
 const Register = ({handleRegister}) => {
 
   const formValues = useValidation();
-
-  // const [data, setData] = useState({
-  //   email: '',
-  //   password: ''
-  // });
-
-  // function handleChange(e) {
-  //   const {name, value} = e.target;
-  //   setData((oldData) => ({
-  //     ...oldData,
-  //     [name]: value
-  //   }))
-  // }
 
   function handleSubmit(e) {
     e.preventDefault();

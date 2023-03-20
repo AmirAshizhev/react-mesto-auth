@@ -6,7 +6,6 @@ const Login = ({handleLogin}) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // console.log (data)
     handleLogin(formValues.values);
   }
 
