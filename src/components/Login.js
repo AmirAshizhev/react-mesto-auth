@@ -1,24 +1,27 @@
 import { useState } from "react";
+import { useValidation } from '../hooks/useValidation';
 
 const Login = ({handleLogin}) => {
 
-  const [data, setData] = useState({
-    email: '',
-    password: ''
-  });
+  const formValues = useValidation();
 
-  function handleChange(e) {
-    const {name, value} = e.target;
-    setData((oldData) => ({
-      ...oldData,
-      [name]: value
-    }))
-  }
+  // const [data, setData] = useState({
+  //   email: '',
+  //   password: ''
+  // });
+
+  // function handleChange(e) {
+  //   const {name, value} = e.target;
+  //   setData((oldData) => ({
+  //     ...oldData,
+  //     [name]: value
+  //   }))
+  // }
 
   function handleSubmit(e) {
     e.preventDefault();
     // console.log (data)
-    handleLogin(data);
+    handleLogin(formValues.values);
   }
 
   return (
@@ -31,11 +34,12 @@ const Login = ({handleLogin}) => {
             name="email" 
             placeholder="Email" 
             className="login__input" 
+            pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
             required 
-            onChange={handleChange}
-            value = {data.email}
+            onChange={formValues.handleChange}
+            value = {formValues.values.email || ""}
           />
-          <span className="popup__item-error edit-button-name-error"></span>
+          <span className="popup__item-error edit-button-name-error">{formValues.errors.email}</span>
         </label>
         <label className="popup__field">
           <input 
@@ -44,13 +48,14 @@ const Login = ({handleLogin}) => {
             placeholder="Пароль" 
             className="login__input" 
             required 
-            onChange={handleChange}
-            value = {data.password}
+            onChange={formValues.handleChange}
+            value = {formValues.values.password || ""}
+            minLength = {3}
           />
-          <span className="popup__item-error edit-button-description-error"> </span>
+          <span className="popup__item-error edit-button-description-error">{formValues.errors.password}</span>
         </label>
       </fieldset>
-      <button className="login__button" type="submit" aria-label="Войти">Войти</button>
+      <button className="login__button" type="submit" aria-label="Войти" disabled={!formValues.isValid}>Войти</button>
     </form>
   )
 }

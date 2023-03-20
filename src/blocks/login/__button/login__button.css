@@ -20,3 +20,9 @@
   transition: opacity 0.5s ease;
   cursor: pointer;
 }
+
+.login__button:disabled{
+  opacity: 1;
+  transition:none;
+  cursor:auto;
+}
