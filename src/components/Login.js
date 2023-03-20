@@ -1,22 +1,8 @@
-import { useState } from "react";
 import { useValidation } from '../hooks/useValidation';
 
 const Login = ({handleLogin}) => {
 
   const formValues = useValidation();
-
-  // const [data, setData] = useState({
-  //   email: '',
-  //   password: ''
-  // });
-
-  // function handleChange(e) {
-  //   const {name, value} = e.target;
-  //   setData((oldData) => ({
-  //     ...oldData,
-  //     [name]: value
-  //   }))
-  // }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -39,7 +25,7 @@ const Login = ({handleLogin}) => {
             onChange={formValues.handleChange}
             value = {formValues.values.email || ""}
           />
-          <span className="popup__item-error edit-button-name-error">{formValues.errors.email}</span>
+          <span className="popup__item-error">{formValues.errors.email}</span>
         </label>
         <label className="popup__field">
           <input 
@@ -52,7 +38,7 @@ const Login = ({handleLogin}) => {
             value = {formValues.values.password || ""}
             minLength = {3}
           />
-          <span className="popup__item-error edit-button-description-error">{formValues.errors.password}</span>
+          <span className="popup__item-error">{formValues.errors.password}</span>
         </label>
       </fieldset>
       <button className="login__button" type="submit" aria-label="Войти" disabled={!formValues.isValid}>Войти</button>

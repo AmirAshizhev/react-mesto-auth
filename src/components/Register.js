@@ -1,24 +1,27 @@
-import { useState } from "react"
+// import { useState } from "react"
 import { Link } from "react-router-dom"
+import { useValidation } from '../hooks/useValidation';
 
 const Register = ({handleRegister}) => {
 
-  const [data, setData] = useState({
-    email: '',
-    password: ''
-  });
+  const formValues = useValidation();
 
-  function handleChange(e) {
-    const {name, value} = e.target;
-    setData((oldData) => ({
-      ...oldData,
-      [name]: value
-    }))
-  }
+  // const [data, setData] = useState({
+  //   email: '',
+  //   password: ''
+  // });
+
+  // function handleChange(e) {
+  //   const {name, value} = e.target;
+  //   setData((oldData) => ({
+  //     ...oldData,
+  //     [name]: value
+  //   }))
+  // }
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleRegister(data)
+    handleRegister(formValues.values)
   }
 
   return (
@@ -32,10 +35,11 @@ const Register = ({handleRegister}) => {
           placeholder="Email" 
           className="login__input" 
           required 
-          onChange={handleChange}
-          value = {data.email}
+          pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+          onChange={formValues.handleChange}
+          value = {formValues.values.email || ""}
         />
-        <span className="popup__item-error edit-button-name-error"></span>
+        <span className="popup__item-error edit-button-name-error">{formValues.errors.email}</span>
       </label>
       <label className="popup__field">
         <input 
@@ -44,13 +48,14 @@ const Register = ({handleRegister}) => {
           placeholder="Пароль" 
           className="login__input" 
           required 
-          onChange={handleChange}
-          value ={data.password}
+          onChange={formValues.handleChange}
+          value ={formValues.values.password || ""}
+          minLength = {3}
         />
-        <span className="popup__item-error edit-button-description-error"> </span>
+        <span className="popup__item-error edit-button-description-error">{formValues.errors.password}</span>
       </label>
     </fieldset>
-    <button className="login__button" type="submit" aria-label="Войти">Зарегестрироваться</button>
+    <button className="login__button" type="submit" aria-label="Войти" disabled={!formValues.isValid}>Зарегестрироваться</button>
     <p className="login__text">Уже зарегестрированы? <Link className="login__link" to="/sign-in" target="_self">Войти</Link></p>
   </form>
   )
