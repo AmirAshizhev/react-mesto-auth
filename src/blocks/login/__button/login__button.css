@@ -6,6 +6,7 @@
   margin-top: 191px;
   background: #FFFFFF;
   border-radius: 2px;
+  color: black;
 
   font-family: 'Inter', Arial, sans-serif;;
   font-style: normal;
@@ -25,4 +26,5 @@
   opacity: 1;
   transition:none;
   cursor:auto;
+  color: rgba(16, 16, 16, 0.3)
 }
